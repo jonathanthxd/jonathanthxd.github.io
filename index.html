@@ -4,13 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Vulcan Studios</title>
-
 <link rel="icon" type="image/png" sizes="32x32" href="favicon.png">
 <link rel="icon" type="image/png" sizes="16x16" href="favicon.png">
 <link rel="apple-touch-icon" sizes="180x180" href="favicon.png">
-
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
-
 <style>
 :root {
     --primary:#ff1a1a;
@@ -22,6 +19,54 @@
 /* RESET */
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif;}
 body{background:var(--bg);color:var(--text);overflow-x:hidden;}
+
+/* ==================== CURSOR PREMIUM GROK ==================== */
+body { cursor: none; }
+
+.cursor {
+    width: 9px;
+    height: 9px;
+    background: var(--primary);
+    border-radius: 50%;
+    position: fixed;
+    z-index: 99999;
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    box-shadow:
+        0 0 12px var(--primary),
+        0 0 25px var(--primary),
+        0 0 45px rgba(255,26,26,0.6);
+    transition: transform 0.08s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.cursor-follower {
+    width: 42px;
+    height: 42px;
+    border: 2px solid rgba(255, 26, 26, 0.4);
+    border-radius: 50%;
+    position: fixed;
+    z-index: 99998;
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    box-shadow:
+        0 0 25px rgba(255,26,26,0.3),
+        0 0 55px rgba(255,26,26,0.15);
+    transition:
+        transform 0.22s cubic-bezier(0.23, 1, 0.32, 1),
+        width 0.28s ease,
+        height 0.28s ease,
+        border-color 0.25s ease,
+        background 0.25s ease;
+}
+
+.cursor-hover {
+    transform: translate(-50%, -50%) scale(2.4);
+    border-color: var(--primary);
+    background: rgba(255, 26, 26, 0.12);
+    box-shadow:
+        0 0 40px rgba(255,26,26,0.55),
+        0 0 70px rgba(255,26,26,0.25);
+}
 
 /* LOADER */
 .loader{
@@ -120,6 +165,28 @@ section{padding:120px 10%;}
     box-shadow:0 20px 40px rgba(0,0,0,.5);
 }
 
+/* TEAM - AVATARS CON IMÁGENES */
+.team-card{
+    text-align:center;
+}
+.avatar{
+    width:80px;
+    height:80px;
+    border-radius:50%;
+    margin:0 auto 15px;
+    background-size: cover;
+    background-position: center;
+    border: 3px solid rgba(255, 26, 26, 0.3);
+    box-shadow: 0 0 15px rgba(255, 26, 26, 0.2);
+    transition: all 0.4s ease;
+}
+
+.avatar:hover {
+    border-color: var(--primary);
+    box-shadow: 0 0 25px rgba(255, 26, 26, 0.5);
+    transform: scale(1.08);
+}
+
 /* PORTFOLIO */
 .project{
     height:180px;
@@ -129,26 +196,19 @@ section{padding:120px 10%;}
     color:#666;
 }
 
-/* TEAM */
-.team-card{
-    text-align:center;
-}
-.avatar{
-    width:80px;height:80px;
-    border-radius:50%;
-    background:linear-gradient(#222,#111);
-    margin:0 auto 15px;
-}
-
 /* ANIM */
 .fade{opacity:0;transform:translateY(40px);transition:1s;}
 .show{opacity:1;transform:translateY(0);}
 </style>
 </head>
-
 <body>
 
 <div class="loader"><span>VULCAN</span></div>
+
+<!-- CURSORES -->
+<div class="cursor"></div>
+<div class="cursor-follower"></div>
+
 <canvas id="bg"></canvas>
 
 <nav>
@@ -173,9 +233,7 @@ section{padding:120px 10%;}
 <h2>Quiénes Somos</h2>
 <p style="color:#aaa;max-width:800px;">
 Vulcan Studios es un estudio técnico especializado en el desarrollo y optimización de servidores de Minecraft.
-
 Creamos soluciones personalizadas enfocadas en rendimiento, estabilidad y calidad, adaptadas a las necesidades de cada proyecto.
-
 Trabajamos con servidores de cualquier escala, desde proyectos independientes hasta networks completas, manteniendo siempre un principio claro: transparencia, control y comunicación constante con el cliente.
 </p>
 </section>
@@ -208,19 +266,19 @@ Trabajamos con servidores de cualquier escala, desde proyectos independientes ha
 <h2>Equipo</h2>
 <div class="grid">
 <div class="card team-card">
-<div class="avatar"></div>
-<h3>Daniel</h3>
-<p style="color:#777;">Main Developer</p>
+    <div class="avatar" style="background-image: url('daniel.png');"></div>
+    <h3>Jonathan</h3>
+    <p style="color:#777;">Main Developer</p>
 </div>
 <div class="card team-card">
-<div class="avatar"></div>
-<h3>OldMixaYz</h3>
-<p style="color:#777;">Developer</p>
+    <div class="avatar" style="background-image: url('oldmixayz.png');"></div>
+    <h3>OldMixaYz</h3>
+    <p style="color:#777;">Developer</p>
 </div>
 <div class="card team-card">
-<div class="avatar"></div>
-<h3>eljuanito1206</h3>
-<p style="color:#777;">Developer</p>
+    <div class="avatar" style="background-image: url('eljuanito.png');"></div>
+    <h3>eljuanito1206</h3>
+    <p style="color:#777;">Developer</p>
 </div>
 </div>
 </section>
@@ -248,12 +306,10 @@ document.querySelectorAll(".fade").forEach(el=>obs.observe(el));
 const c=document.getElementById("bg");
 const ctx=c.getContext("2d");
 c.width=innerWidth;c.height=innerHeight;
-
 let p=[];
 for(let i=0;i<80;i++){
 p.push({x:Math.random()*c.width,y:Math.random()*c.height,r:Math.random()*2});
 }
-
 function draw(){
 ctx.clearRect(0,0,c.width,c.height);
 p.forEach(e=>{
@@ -267,7 +323,46 @@ if(e.y>c.height)e.y=0;
 requestAnimationFrame(draw);
 }
 draw();
-</script>
 
+// ==================== CURSOR PREMIUM GROK ====================
+const cursor = document.querySelector(".cursor");
+const follower = document.querySelector(".cursor-follower");
+
+let mouseX = 0, mouseY = 0;
+let posX = 0, posY = 0;
+
+document.addEventListener("mousemove", e => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+    cursor.style.left = mouseX + "px";
+    cursor.style.top = mouseY + "px";
+});
+
+function animate() {
+    posX += (mouseX - posX) * 0.14;
+    posY += (mouseY - posY) * 0.14;
+
+    follower.style.left = posX + "px";
+    follower.style.top = posY + "px";
+
+    requestAnimationFrame(animate);
+}
+animate();
+
+// Hover premium
+const hoverElements = document.querySelectorAll("a, button, .card, .btn");
+hoverElements.forEach(el => {
+    el.addEventListener("mouseenter", () => follower.classList.add("cursor-hover"));
+    el.addEventListener("mouseleave", () => follower.classList.remove("cursor-hover"));
+});
+
+// Pulse al hacer clic
+document.addEventListener("mousedown", () => {
+    cursor.style.transform = `translate(-50%, -50%) scale(2.1)`;
+    setTimeout(() => {
+        cursor.style.transform = `translate(-50%, -50%) scale(1)`;
+    }, 120);
+});
+</script>
 </body>
 </html>
