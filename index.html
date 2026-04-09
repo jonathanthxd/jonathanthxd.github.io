@@ -5,209 +5,260 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Vulcan Studios</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 
 <style>
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Poppins', sans-serif;
+:root {
+    --primary:#ff1a1a;
+    --bg:#050505;
+    --text:#ffffff;
+    --glass:rgba(255,255,255,0.06);
 }
 
-body {
-    background: #0b0b0b;
-    color: white;
-    scroll-behavior: smooth;
+/* RESET */
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif;}
+body{background:var(--bg);color:var(--text);overflow-x:hidden;}
+
+/* LOADER */
+.loader{
+    position:fixed;
+    width:100%;
+    height:100%;
+    background:#000;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    z-index:9999;
+    transition:1s;
 }
+.loader.hidden{opacity:0;pointer-events:none;}
+.loader span{
+    font-size:2rem;
+    letter-spacing:5px;
+    animation:pulse 1.2s infinite;
+}
+@keyframes pulse{0%,100%{opacity:0.3}50%{opacity:1}}
+
+/* BACKGROUND GLOW */
+body::before{
+    content:"";
+    position:fixed;
+    width:700px;height:700px;
+    background:radial-gradient(circle,#ff0000 0%,transparent 70%);
+    top:-200px;left:-200px;
+    filter:blur(150px);
+    opacity:.25;
+    z-index:-2;
+}
+
+/* PARTICLES */
+canvas{position:fixed;z-index:-1;}
 
 /* NAV */
-nav {
-    position: fixed;
-    width: 100%;
-    padding: 15px 40px;
-    backdrop-filter: blur(15px);
-    background: rgba(255,255,255,0.05);
-    display: flex;
-    justify-content: space-between;
-    z-index: 1000;
+nav{
+    position:fixed;width:100%;
+    padding:20px 10%;
+    display:flex;justify-content:space-between;
+    backdrop-filter:blur(20px);
+    background:rgba(0,0,0,0.4);
+    z-index:1000;
 }
-
-nav a {
-    color: white;
-    text-decoration: none;
-    margin-left: 20px;
-}
+nav a{color:#aaa;margin-left:25px;text-decoration:none;}
+nav a:hover{color:#fff;}
 
 /* HERO */
-.hero {
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    text-align: center;
-    background: radial-gradient(circle at center, #ff000022, transparent);
+.hero{
+    height:100vh;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    padding:0 10%;
 }
-
-.hero h1 {
-    font-size: 3rem;
-    margin-bottom: 10px;
+.hero h1{
+    font-size:4rem;
+    background:linear-gradient(90deg,#fff,#ff4d4d);
+    -webkit-background-clip:text;
+    color:transparent;
 }
-
-.hero p {
-    opacity: 0.7;
-    margin-bottom: 20px;
+.hero p{color:#aaa;margin:20px 0;max-width:500px;}
+.btn{
+    padding:14px 28px;
+    border-radius:30px;
+    border:none;
+    background:linear-gradient(90deg,#ff0000,#ff4d4d);
+    color:white;
+    cursor:pointer;
+    transition:.3s;
 }
-
-.btn {
-    padding: 12px 25px;
-    border-radius: 30px;
-    border: none;
-    cursor: pointer;
-    background: #ff0000;
-    color: white;
-    transition: 0.3s;
-}
-
-.btn:hover {
-    background: #ff3333;
-}
+.btn:hover{transform:scale(1.08);box-shadow:0 0 20px #ff000088;}
 
 /* SECTIONS */
-section {
-    padding: 80px 10%;
-}
-
-/* GLASS CARD */
-.card {
-    background: rgba(255,255,255,0.05);
-    border-radius: 15px;
-    padding: 20px;
-    backdrop-filter: blur(15px);
-    transition: 0.3s;
-}
-
-.card:hover {
-    transform: translateY(-5px);
-}
+section{padding:120px 10%;}
 
 /* GRID */
-.grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 20px;
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+    gap:25px;
 }
 
-/* TITLES */
-h2 {
-    margin-bottom: 20px;
+/* CARD */
+.card{
+    background:var(--glass);
+    border-radius:20px;
+    padding:25px;
+    backdrop-filter:blur(20px);
+    border:1px solid rgba(255,255,255,0.05);
+    transition:.4s;
+}
+.card:hover{
+    transform:translateY(-10px);
+    box-shadow:0 20px 40px rgba(0,0,0,.5);
 }
 
-/* CONTACT */
-.contact a {
-    display: inline-block;
-    margin: 10px;
+/* PORTFOLIO */
+.project{
+    height:180px;
+    border-radius:15px;
+    background:linear-gradient(135deg,#111,#222);
+    display:flex;align-items:center;justify-content:center;
+    color:#666;
 }
 
-/* ANIMATIONS */
-.hidden {
-    opacity: 0;
-    transform: translateY(20px);
-    transition: 0.6s;
+/* TEAM */
+.team-card{
+    text-align:center;
+}
+.avatar{
+    width:80px;height:80px;
+    border-radius:50%;
+    background:linear-gradient(#222,#111);
+    margin:0 auto 15px;
 }
 
-.show {
-    opacity: 1;
-    transform: translateY(0);
-}
+/* ANIM */
+.fade{opacity:0;transform:translateY(40px);transition:1s;}
+.show{opacity:1;transform:translateY(0);}
 </style>
 </head>
 
 <body>
 
+<div class="loader"><span>VULCAN</span></div>
+<canvas id="bg"></canvas>
+
 <nav>
-    <h3>Vulcan Studios</h3>
-    <div>
-        <a href="#about">Sobre</a>
-        <a href="#services">Servicios</a>
-        <a href="#portfolio">Portafolio</a>
-        <a href="#contact">Contacto</a>
-    </div>
+<h3>Vulcan Studios</h3>
+<div>
+<a href="#about">Sobre</a>
+<a href="#services">Servicios</a>
+<a href="#portfolio">Portafolio</a>
+<a href="#contact">Contacto</a>
+</div>
 </nav>
 
 <!-- HERO -->
 <section class="hero">
-    <h1>Desarrollo Profesional de Servidores Minecraft</h1>
-    <p>Vulcan Studios — Seguro, Calidad y Eficiencia.</p>
-    <a href="#contact"><button class="btn">Contactar</button></a>
+<h1>Desarrollo Profesional de Servidores Minecraft</h1>
+<p>Seguro, Calidad y Eficiencia. Creamos experiencias técnicas de alto nivel.</p>
+<a href="#contact"><button class="btn">Contactar</button></a>
 </section>
 
 <!-- ABOUT -->
-<section id="about" class="hidden">
-    <h2>Quiénes Somos</h2>
-    <p>
-        Vulcan Studios nace como un hobby profesionalizado, impulsado por mi pasión por Minecraft y años de experiencia desarrollando servidores.
-        <br><br>
-        Nos enfocamos en optimización, estabilidad y rendimiento, garantizando una experiencia única.
-        <br><br>
-        Trabajamos con proyectos de cualquier escala, con transparencia total y comunicación constante.
-    </p>
+<section id="about" class="fade">
+<h2>Quiénes Somos</h2>
+<p style="color:#aaa;max-width:800px;">
+Vulcan Studios nace como un hobby profesionalizado, impulsado por la pasión por Minecraft y años de experiencia optimizando servidores.
+</p>
 </section>
 
 <!-- SERVICES -->
-<section id="services" class="hidden">
-    <h2>Servicios</h2>
-    <div class="grid">
-        <div class="card">🛠️ Desarrollo Completo de Servidores</div>
-        <div class="card">⚙️ Modpacks y Servidores Modded</div>
-        <div class="card">🎮 Sistemas RPG / MMO</div>
-        <div class="card">🔧 Optimización de Rendimiento</div>
-        <div class="card">💬 Asesoría Técnica</div>
-        <div class="card">📦 Modalidad Personalizada</div>
-    </div>
+<section id="services" class="fade">
+<h2>Servicios</h2>
+<div class="grid">
+<div class="card">🛠️ Desarrollo completo</div>
+<div class="card">⚙️ Modpacks personalizados</div>
+<div class="card">🎮 Sistemas MMO</div>
+<div class="card">🔧 Optimización avanzada</div>
+<div class="card">💬 Soporte técnico</div>
+<div class="card">📦 Modalidad flexible</div>
+</div>
 </section>
 
 <!-- PORTFOLIO -->
-<section id="portfolio" class="hidden">
-    <h2>Portafolio</h2>
-    <div class="grid">
-        <div class="card">Proyecto próximamente</div>
-        <div class="card">Proyecto próximamente</div>
-        <div class="card">Proyecto próximamente</div>
-    </div>
+<section id="portfolio" class="fade">
+<h2>Portafolio</h2>
+<div class="grid">
+<div class="card"><div class="project">Proyecto próximamente</div></div>
+<div class="card"><div class="project">Proyecto próximamente</div></div>
+<div class="card"><div class="project">Proyecto próximamente</div></div>
+</div>
 </section>
 
 <!-- TEAM -->
-<section class="hidden">
-    <h2>Equipo</h2>
-    <div class="grid">
-        <div class="card">Daniel</div>
-        <div class="card">OldMixaYz</div>
-        <div class="card">Eljuanito</div>
-    </div>
+<section class="fade">
+<h2>Equipo</h2>
+<div class="grid">
+<div class="card team-card">
+<div class="avatar"></div>
+<h3>Daniel</h3>
+<p style="color:#777;">Developer</p>
+</div>
+<div class="card team-card">
+<div class="avatar"></div>
+<h3>OldMixaYz</h3>
+<p style="color:#777;">Builder</p>
+</div>
+<div class="card team-card">
+<div class="avatar"></div>
+<h3>Eljuanito</h3>
+<p style="color:#777;">Systems</p>
+</div>
+</div>
 </section>
 
 <!-- CONTACT -->
-<section id="contact" class="contact hidden">
-    <h2>Contacto</h2>
-    <p>Cotizaciones únicamente por privado</p>
-
-    <a href="mailto:vulcanstudios@gmail.com"><button class="btn">Correo</button></a>
-    <a href="https://dsc.gg/vulcanstudios"><button class="btn">Discord</button></a>
+<section id="contact" class="fade">
+<h2>Contacto</h2>
+<p style="color:#aaa;">Cotizaciones únicamente por privado</p>
+<br>
+<a href="mailto:vulcanstudios@gmail.com"><button class="btn">Correo</button></a>
+<a href="https://dsc.gg/vulcanstudios"><button class="btn">Discord</button></a>
 </section>
 
 <script>
-// SCROLL ANIMATION
-const observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-        if(entry.isIntersecting){
-            entry.target.classList.add("show");
-        }
-    });
-});
+// LOADER
+window.onload=()=>setTimeout(()=>document.querySelector(".loader").classList.add("hidden"),1000);
 
-document.querySelectorAll(".hidden").forEach(el => observer.observe(el));
+// SCROLL
+const obs=new IntersectionObserver(e=>{
+e.forEach(x=>{if(x.isIntersecting)x.target.classList.add("show")});
+});
+document.querySelectorAll(".fade").forEach(el=>obs.observe(el));
+
+// PARTICLES
+const c=document.getElementById("bg");
+const ctx=c.getContext("2d");
+c.width=innerWidth;c.height=innerHeight;
+
+let p=[];
+for(let i=0;i<80;i++){
+p.push({x:Math.random()*c.width,y:Math.random()*c.height,r:Math.random()*2});
+}
+
+function draw(){
+ctx.clearRect(0,0,c.width,c.height);
+p.forEach(e=>{
+ctx.beginPath();
+ctx.arc(e.x,e.y,e.r,0,Math.PI*2);
+ctx.fillStyle="white";
+ctx.fill();
+e.y+=0.2;
+if(e.y>c.height)e.y=0;
+});
+requestAnimationFrame(draw);
+}
+draw();
 </script>
 
 </body>
