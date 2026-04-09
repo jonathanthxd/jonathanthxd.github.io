@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vulcan Studios</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background: #0b0b0b;
+    color: white;
+    scroll-behavior: smooth;
+}
+
+/* NAV */
+nav {
+    position: fixed;
+    width: 100%;
+    padding: 15px 40px;
+    backdrop-filter: blur(15px);
+    background: rgba(255,255,255,0.05);
+    display: flex;
+    justify-content: space-between;
+    z-index: 1000;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    margin-left: 20px;
+}
+
+/* HERO */
+.hero {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    background: radial-gradient(circle at center, #ff000022, transparent);
+}
+
+.hero h1 {
+    font-size: 3rem;
+    margin-bottom: 10px;
+}
+
+.hero p {
+    opacity: 0.7;
+    margin-bottom: 20px;
+}
+
+.btn {
+    padding: 12px 25px;
+    border-radius: 30px;
+    border: none;
+    cursor: pointer;
+    background: #ff0000;
+    color: white;
+    transition: 0.3s;
+}
+
+.btn:hover {
+    background: #ff3333;
+}
+
+/* SECTIONS */
+section {
+    padding: 80px 10%;
+}
+
+/* GLASS CARD */
+.card {
+    background: rgba(255,255,255,0.05);
+    border-radius: 15px;
+    padding: 20px;
+    backdrop-filter: blur(15px);
+    transition: 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+/* GRID */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+/* TITLES */
+h2 {
+    margin-bottom: 20px;
+}
+
+/* CONTACT */
+.contact a {
+    display: inline-block;
+    margin: 10px;
+}
+
+/* ANIMATIONS */
+.hidden {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: 0.6s;
+}
+
+.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+</style>
+</head>
+
+<body>
+
+<nav>
+    <h3>Vulcan Studios</h3>
+    <div>
+        <a href="#about">Sobre</a>
+        <a href="#services">Servicios</a>
+        <a href="#portfolio">Portafolio</a>
+        <a href="#contact">Contacto</a>
+    </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+    <h1>Desarrollo Profesional de Servidores Minecraft</h1>
+    <p>Vulcan Studios — Seguro, Calidad y Eficiencia.</p>
+    <a href="#contact"><button class="btn">Contactar</button></a>
+</section>
+
+<!-- ABOUT -->
+<section id="about" class="hidden">
+    <h2>Quiénes Somos</h2>
+    <p>
+        Vulcan Studios nace como un hobby profesionalizado, impulsado por mi pasión por Minecraft y años de experiencia desarrollando servidores.
+        <br><br>
+        Nos enfocamos en optimización, estabilidad y rendimiento, garantizando una experiencia única.
+        <br><br>
+        Trabajamos con proyectos de cualquier escala, con transparencia total y comunicación constante.
+    </p>
+</section>
+
+<!-- SERVICES -->
+<section id="services" class="hidden">
+    <h2>Servicios</h2>
+    <div class="grid">
+        <div class="card">🛠️ Desarrollo Completo de Servidores</div>
+        <div class="card">⚙️ Modpacks y Servidores Modded</div>
+        <div class="card">🎮 Sistemas RPG / MMO</div>
+        <div class="card">🔧 Optimización de Rendimiento</div>
+        <div class="card">💬 Asesoría Técnica</div>
+        <div class="card">📦 Modalidad Personalizada</div>
+    </div>
+</section>
+
+<!-- PORTFOLIO -->
+<section id="portfolio" class="hidden">
+    <h2>Portafolio</h2>
+    <div class="grid">
+        <div class="card">Proyecto próximamente</div>
+        <div class="card">Proyecto próximamente</div>
+        <div class="card">Proyecto próximamente</div>
+    </div>
+</section>
+
+<!-- TEAM -->
+<section class="hidden">
+    <h2>Equipo</h2>
+    <div class="grid">
+        <div class="card">Daniel</div>
+        <div class="card">OldMixaYz</div>
+        <div class="card">Eljuanito</div>
+    </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="contact hidden">
+    <h2>Contacto</h2>
+    <p>Cotizaciones únicamente por privado</p>
+
+    <a href="mailto:vulcanstudios@gmail.com"><button class="btn">Correo</button></a>
+    <a href="https://dsc.gg/vulcanstudios"><button class="btn">Discord</button></a>
+</section>
+
+<script>
+// SCROLL ANIMATION
+const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+        if(entry.isIntersecting){
+            entry.target.classList.add("show");
+        }
+    });
+});
+
+document.querySelectorAll(".hidden").forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
